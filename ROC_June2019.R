@@ -19,10 +19,10 @@ undisg_l <- roc(controls = undisguise_long$false.ID, cases = undisguise_long$cor
               [!is.na(undisguise_long$correct.ID)], direction = "<", partial.auc = c(1, .75))
 
 ##############Run pAUC analyses###############
-# short encoding disguise vs undisguise .81 specificity (specificity = 1 - FA rate)
+# short encoding disguise vs undisguise .75 specificity 
 roc.test(disg_s, undisg_s, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .75),
          partial.auc.focus = "sp", method = "bootstrap")
-# long encoding disguise vs. undisguise .9 specificity
+# long encoding disguise vs. undisguise .75 specificity
 roc.test(disg_l, undisg_l, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .75),
          partial.auc.focus = "sp", method = "bootstrap")
 
