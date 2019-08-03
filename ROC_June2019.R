@@ -26,14 +26,17 @@ roc.test(disg_s, undisg_s, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1,
 roc.test(disg_l, undisg_l, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .9),
          partial.auc.focus = "sp", method = "bootstrap")
 
-##############Plot ROC curves###############
-# long encoding disguise and undisguise
-plot.roc(disg_l, type = "l", xlab = "False Alarm Rate", ylab = "Hit Rate", legacy.axes = TRUE)
-plot.roc(disg_l, type = "p", add = TRUE)
-plot.roc(undisg_l, type = "l", add = TRUE, col = "Red")
-plot.roc(undisg_l, type = "p", add = TRUE, col = "Red")
-# short encoding disguise and undisguise
-plot.roc(disg_s, type = "l", xlab = "False Alarm Rate", ylab = "Hit Rate", legacy.axes = TRUE)
-plot.roc(disg_s, type = "p", add = TRUE)
-plot.roc(undisg_s, type = "l", add = TRUE, col = "Red")
-plot.roc(undisg_s, type = "p", add = TRUE, col = "Red")
+##############Plot ROC using ggplot2###############
+short <- ggroc(list(Disguised = disg_s, Undisguised = undisg_s), legacy.axes = TRUE) + 
+  labs(title = "Disguised vs. Undisguised Lineups", subtitle = "Under Short Encoding Conditions", 
+       x = "False Alarm Rate", y = "Hit Rate", color = "Lineup Type") + geom_segment(aes (x = 0, 
+       xend = .4, y = 0, yend = .4), color="grey", linetype="dashed")  + xlim(0,.4) + 
+  geom_point(size = 1.5) + theme_classic()
+short
+
+long <- ggroc(list(Disguised = disg_l, Undisguised = undisg_l), legacy.axes = TRUE) +
+  labs(title = "Disguised vs. Undisguised Lineups", subtitle = "Under Long Encoding Conditions", 
+       x = "False Alarm Rate", y = "Hit Rate", color = "Lineup Type") + geom_segment(aes (x = 0, 
+       xend = .3, y = 0, yend = .4), color="grey", linetype="dashed") + xlim(0, .3) + 
+  geom_point(size = 1.5) + theme_classic()
+long
