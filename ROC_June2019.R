@@ -10,20 +10,20 @@ undisguise_long <- read.delim("undisguise_long.txt")
 
 ##############Create ROC curves###############
 disg_s <- roc(controls = disguise_short$false.ID, cases = disguise_short$correct.ID
-              [!is.na(disguise_short$correct.ID)], direction = "<")
+              [!is.na(disguise_short$correct.ID)], direction = "<", partial.auc = c(1, .75))
 disg_l <- roc(controls = disguise_long$false.ID, cases = disguise_long$correct.ID
-              [!is.na(disguise_long$correct.ID)], direction = "<")
+              [!is.na(disguise_long$correct.ID)], direction = "<", partial.auc = c(1, .75))
 undisg_s <- roc(controls = undisguise_short$false.ID, cases = undisguise_short$correct.ID
-              [!is.na(undisguise_short$correct.ID)], direction = "<")
+              [!is.na(undisguise_short$correct.ID)], direction = "<", partial.auc = c(1, .75))
 undisg_l <- roc(controls = undisguise_long$false.ID, cases = undisguise_long$correct.ID
-              [!is.na(undisguise_long$correct.ID)], direction = "<")
+              [!is.na(undisguise_long$correct.ID)], direction = "<", partial.auc = c(1, .75))
 
 ##############Run pAUC analyses###############
 # short encoding disguise vs undisguise .81 specificity (specificity = 1 - FA rate)
-roc.test(disg_s, undisg_s, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .81),
+roc.test(disg_s, undisg_s, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .75),
          partial.auc.focus = "sp", method = "bootstrap")
 # long encoding disguise vs. undisguise .9 specificity
-roc.test(disg_l, undisg_l, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .9),
+roc.test(disg_l, undisg_l, reuse.auc = FALSE, paired = FALSE, partial.auc = c(1, .75),
          partial.auc.focus = "sp", method = "bootstrap")
 
 ##############Plot ROC using ggplot2###############
