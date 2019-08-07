@@ -2,7 +2,6 @@ library(tidyverse)
 library(caret)
 library(glmnet)
 library(lmSupport)
-library(PRROC)
 library(doParallel)
 library(beepr)
 library(ggplot2)
@@ -115,16 +114,3 @@ dCV$severity[dCV$obs>5] <- "Severe"
 ggplot(dCV, aes(x = obs, y = response, color = severity)) + geom_point(position = "jitter") + 
   labs(title = "Observed and Predicted Symptom Counts", x = "Observed Symptom Count",
        y = "Predicted Symptom Count") + geom_smooth(method=lm, se=FALSE) + theme_classic()
-
-#ROC curve-------------------------------------------------
-#dichotomize for diagnosis performance
-dCV$AUD = dCV$obs>=2
-
-ROC_CV = roc.curve(scores.class0 = dCV$response,
-                   weights.class0 = 2-as.numeric(dCV$AUD), 
-                   curve = TRUE, rand.compute = TRUE);
-plot(ROC_CV, xlab= "False Postive Rate (1-Specificity)", 
-     ylab = "True Positive Rate (Sensitivity)", rand.plot = TRUE)
-
-
-
